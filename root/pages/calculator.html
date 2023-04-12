@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flat Price Calculator</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <form class="mt-4 needs-validation" novalidate>
+            <div class="row justify-content-center">
+
+                <div class="col-md-6 offset-0">
+                    <!--Title-->
+                    <div class="text text-center">
+                        <h2>Flat Price Calculator</h2>
+                        <hr>
+                    </div>
+
+                    <!--Flat-price-input-->
+                    <div class="mb-3">
+                        <label for="flatprice" class="form-label">Flat Price</label>
+                        <input type="number" class="form-control" id="flatprice" onkeyup="inputFlatPrice()"
+                            placeholder="Enter the Flat Price" required>
+                        <div class="invalid-feedback" id="emptyPrice">
+                            Please enter the flat price.
+                        </div>
+                    </div>
+
+                    <!--OC-->
+                    <div class="mb-3">
+                        <input type="checkbox" id="oc" onchange="removegst(this)" class="form-check-input">
+                        <label for="oc" class="form-check-label">Occupancy Certificate</label>
+                    </div>
+
+                    <!--GST-->
+                    <div class="mb-3">
+                        <label for="gstcharges" class="form-label" id="labelgstcharges">GST Charges (18%)</label>
+                        <input type="number" id="gstcharges" class="form-control" value="" disabled readonly>
+                    </div>
+
+                    <!--Stamp Duty-->
+                    <div class="mb-3">
+                        <label for="stampduty" class="form-label">Stamp Duty Charges (5%)</label>
+                        <input type="number" class="form-control" id="stampduty"
+                            placeholder="Enter the Stamp Duty Charges" required>
+                        <div class="invalid-feedback" id="emptyStampDuty">
+                            Please enter the Stamp Duty charges.
+                        </div>
+                    </div>
+
+                    <!--Registration-->
+                    <div class="mb-3">
+                        <label for="registration" class="form-label">Registration Charges (1%)</label>
+                        <input type="text" id="registration" class="form-control" value="" disabled readonly>
+                    </div>
+
+                    <!--Scanning-->
+                    <div class="mb-3">
+                        <label for="scanning" class="form-label">Scanning Charges</label>
+                        <input type="text" id="scanning" class="form-control" value="" disabled readonly>
+                    </div>
+
+                    <!--Parking Spaces-->
+                    <div class="mb-2">
+                        <input type="checkbox" class="form-check-input" id="parking" onchange="parkingCharges(this)">
+                        <label for="parking" class="form-check-label" id="labelParking">Parking Charges</label>
+
+                        <!--Two Wheeler-->
+
+                        <div class="col px-4">
+                            <input type="checkbox" class="form-check-input" id="twoWheelerParking"
+                                onchange="twoWheeler(this)">
+                            <label for="twoWheelerParking" class="form-check-label" id="labelTwoWheeler">Two
+                                Wheeler</label>
+
+                            <!--Two Wheeler Open-->
+                            <div class="col px-4">
+                                <input type="radio" class="form-check-input" name="twowheelerparkingspace"
+                                    id="twoWheelerOpenParking" onclick="twoWheelerPrivateHide()" value="free">
+                                <label for="twoWheelerOpenParking" class="form-check-label"
+                                    id="labelTwoWheelerOpenParking">Open Space</label>
+
+                                <!--Two Wheeler Private-->
+
+                                <input type="radio" class="form-check-input" name="twowheelerparkingspace"
+                                    id="twoWheelerPrivateParking" onclick="twoWheelerPrivateShow()" value="paid">
+                                <label for="twoWheelerPrivateParking" class="form-check-label"
+                                    id="labelTwoWheelerPrivateParking">Private Space</label>
+
+                                <input type="number" class="form-control" id="twoWheelerParkingCharges"
+                                    placeholder="Enter the Parking Charges">
+
+                            </div>
+
+
+                            <!--Four Wheeler-->
+
+                            <input type="checkbox" class="form-check-input" id="fourWheelerParking"
+                                onchange="fourWheeler(this)">
+                            <label for="fourWheelerParking" class="form-check-label" id="labelFourWheelerParking">Four
+                                Wheeler</label>
+
+                            <!--Four Wheeler Open-->
+                            <div class="col px-4">
+                                <input type="radio" class="form-check-input" name="fourwheelerparkingspace"
+                                    id="fourWheelerOpenParking" value="free" onclick="fourWheelerHide()">
+                                <label for="fourWheelerOpenParking" class="form-check-label"
+                                    id="labelFourWheelerOpenParking">Open Space</label>
+
+                                <!--Four Wheeler Private-->
+
+                                <input type="radio" class="form-check-input" name="fourwheelerparkingspace"
+                                    id="fourWheelerPrivateParking" value="paid" onclick="fourWheelerShow()">
+                                <label for="fourWheelerPrivateParking" class="form-check-label"
+                                    id="labelFourPrivateParking">Private Space</label>
+
+                                <input type="number" class="form-control" id="fourWheelerParkingCharges"
+                                    placeholder="Enter the Parking Charges">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--advance maintenance-->
+
+                    <div class="mb-3">
+                        <input type="checkbox" id="advancemaintenancecheck" class="form-check-input"
+                            onchange="advanceCharges(this)">
+                        <label for="advancemaintenancecheck" class="form-check-from">Advance Maintenace</label>
+                        <input type="number" id="advancemaintenance" class="form-control"
+                            placeholder="Enter the Advance Maintenace Charges">
+                    </div>
+
+                    <!--Submit-->
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="button"
+                            onclick="calculateAll()">Calculate</button>
+                    </div>
+
+                    <!--Alert Message-->
+                    <div class="alert alert-success" role="alert" id="successMessage">
+                        Calculation Successful!!
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="../scripts/calculator.js"></script>
+
+</body>
+
+</html>
